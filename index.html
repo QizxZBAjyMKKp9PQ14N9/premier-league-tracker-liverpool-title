@@ -28,6 +28,15 @@
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+        .home-game {
+            background-color: #ffcccc;
+            position: relative;
+        }
+        .home-game span {
+            display: block;
+            font-size: 12px;
+            color: red;
+        }
         select {
             padding: 5px;
         }
@@ -37,7 +46,7 @@
             let liverpoolPoints = 64;
             let arsenalPoints = 53;
             
-            for (let i = 1; i <= 11; i++) {
+            for (let i = 1; i <= 10; i++) {
                 let liverpoolResult = document.getElementById(`liverpool-${i}`).value;
                 let arsenalResult = document.getElementById(`arsenal-${i}`).value;
                 
@@ -50,8 +59,8 @@
                 document.getElementById(`liverpool-points-${i}`).innerText = liverpoolPoints;
                 document.getElementById(`arsenal-points-${i}`).innerText = arsenalPoints;
                 document.getElementById(`points-gap-${i}`).innerText = liverpoolPoints - arsenalPoints;
-                document.getElementById(`remaining-points-${i}`).innerText = (11 - i) * 3 + arsenalPoints;
-                document.getElementById(`title-won-${i}`).innerText = (liverpoolPoints > (11 - i) * 3 + arsenalPoints) ? "YES" : "No";
+                document.getElementById(`remaining-points-${i}`).innerText = (10 - i) * 3 + arsenalPoints;
+                document.getElementById(`title-won-${i}`).innerText = (liverpoolPoints > (10 - i) * 3 + arsenalPoints) ? "YES" : "No";
             }
         }
     </script>
@@ -60,6 +69,7 @@
     <h2>Premier League Title Race Tracker</h2>
     <table>
         <tr>
+            <th>Date</th>
             <th>Matchday</th>
             <th>Liverpool Opponent</th>
             <th>Arsenal Opponent</th>
@@ -74,28 +84,33 @@
         
         <script>
             const matches = [
-                ["Newcastle United", "Nottingham Forest"],
-                ["Southampton FC", "Manchester United"],
-                ["Aston Villa", "Chelsea FC"],
-                ["Everton FC", "Fulham FC"],
-                ["Fulham FC", "Everton FC"],
-                ["Leicester City", "Brentford FC"],
-                ["Tottenham Hotspur", "Brighton"],
-                ["Chelsea FC", "Wolves"],
-                ["Arsenal FC", "Newcastle United"],
-                ["Brighton & Hove Albion", "Southampton FC"],
-                ["Crystal Palace", "Wolves"]
+                ["26-Feb-25", "Newcastle United", "Nottingham Forest"],
+                ["08-Mar-25", "Southampton FC", "Manchester United"],
+                ["02-Apr-25", "Everton FC", "Chelsea FC"],
+                ["05-Apr-25", "Fulham FC", "Everton FC"],
+                ["12-Apr-25", "Leicester City", "Fulham FC"],
+                ["26-Apr-25", "Tottenham Hotspur", "Brighton & Hove Albion"],
+                ["03-May-25", "Chelsea FC", "Tottenham Hotspur"],
+                ["10-May-25", "Arsenal FC", "Liverpool FC"],
+                ["17-May-25", "Brighton & Hove Albion", "Ipswich Town"],
+                ["25-May-25", "Crystal Palace", "Southampton FC"]
             ];
             
+            const homeGamesLiverpool = ["Newcastle United", "Southampton FC", "Everton FC", "Leicester City", "Tottenham Hotspur", "Arsenal FC", "Crystal Palace"];
+            const homeGamesArsenal = ["Chelsea FC", "Fulham FC", "West Ham United", "Brighton & Hove Albion", "Ipswich Town"];
+            
             for (let i = 0; i < matches.length; i++) {
+                let liverpoolClass = homeGamesLiverpool.includes(matches[i][1]) ? "home-game" : "";
+                let arsenalClass = homeGamesArsenal.includes(matches[i][2]) ? "home-game" : "";
                 document.write(`<tr>
-                    <td>${i + 1}</td>
                     <td>${matches[i][0]}</td>
-                    <td>${matches[i][1]}</td>
+                    <td>${i + 1}</td>
+                    <td class="${liverpoolClass}">${matches[i][1]}${liverpoolClass ? '<span>Home</span>' : ''}</td>
+                    <td class="${arsenalClass}">${matches[i][2]}${arsenalClass ? '<span>Home</span>' : ''}</td>
                     <td id="liverpool-points-${i + 1}">64</td>
                     <td id="arsenal-points-${i + 1}">53</td>
                     <td id="points-gap-${i + 1}">11</td>
-                    <td id="remaining-points-${i + 1}">${(11 - i) * 3 + 53}</td>
+                    <td id="remaining-points-${i + 1}">${(10 - i) * 3 + 53}</td>
                     <td id="title-won-${i + 1}">No</td>
                     <td>
                         <select id="liverpool-${i + 1}" onchange="updatePoints()">
