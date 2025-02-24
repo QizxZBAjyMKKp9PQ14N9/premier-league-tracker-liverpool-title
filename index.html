@@ -37,6 +37,10 @@
             font-size: 12px;
             color: red;
         }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
         select {
             padding: 5px;
         }
@@ -45,6 +49,7 @@
         function updatePoints() {
             let liverpoolPoints = 64;
             let arsenalPoints = 53;
+            let maxPossibleArsenalPoints = 53 + (10 * 3);
             
             for (let i = 1; i <= 10; i++) {
                 let liverpoolResult = document.getElementById(`liverpool-${i}`).value;
@@ -53,14 +58,32 @@
                 if (liverpoolResult === "Win") liverpoolPoints += 3;
                 else if (liverpoolResult === "Draw") liverpoolPoints += 1;
                 
-                if (arsenalResult === "Win") arsenalPoints += 3;
-                else if (arsenalResult === "Draw") arsenalPoints += 1;
+                if (arsenalResult === "Win") {
+                    arsenalPoints += 3;
+                    maxPossibleArsenalPoints -= 0;
+                } else if (arsenalResult === "Draw") {
+                    arsenalPoints += 1;
+                    maxPossibleArsenalPoints -= 2;
+                } else if (arsenalResult === "Loss") {
+                    maxPossibleArsenalPoints -= 3;
+                }
+                
+                let pointsGap = liverpoolPoints - arsenalPoints;
+                let remainingPoints = maxPossibleArsenalPoints - arsenalPoints;
                 
                 document.getElementById(`liverpool-points-${i}`).innerText = liverpoolPoints;
                 document.getElementById(`arsenal-points-${i}`).innerText = arsenalPoints;
-                document.getElementById(`points-gap-${i}`).innerText = liverpoolPoints - arsenalPoints;
-                document.getElementById(`remaining-points-${i}`).innerText = (10 - i) * 3 + arsenalPoints;
-                document.getElementById(`title-won-${i}`).innerText = (liverpoolPoints > (10 - i) * 3 + arsenalPoints) ? "YES" : "No";
+                document.getElementById(`points-gap-${i}`).innerText = pointsGap;
+                document.getElementById(`remaining-points-${i}`).innerText = remainingPoints;
+                
+                let titleWonCell = document.getElementById(`title-won-${i}`);
+                if (pointsGap > remainingPoints) {
+                    titleWonCell.innerText = "YES";
+                    titleWonCell.classList.add("highlight");
+                } else {
+                    titleWonCell.innerText = "No";
+                    titleWonCell.classList.remove("highlight");
+                }
             }
         }
     </script>
@@ -76,7 +99,7 @@
             <th>Liverpool Points</th>
             <th>Arsenal Points</th>
             <th>Points Gap</th>
-            <th>Remaining Possible Points</th>
+            <th>Remaining Possible Arsenal Points</th>
             <th>Title Won?</th>
             <th>Liverpool Result</th>
             <th>Arsenal Result</th>
@@ -110,7 +133,7 @@
                     <td id="liverpool-points-${i + 1}">64</td>
                     <td id="arsenal-points-${i + 1}">53</td>
                     <td id="points-gap-${i + 1}">11</td>
-                    <td id="remaining-points-${i + 1}">${(10 - i) * 3 + 53}</td>
+                    <td id="remaining-points-${i + 1}">${(53 + ((10 - i) * 3)) - 53}</td>
                     <td id="title-won-${i + 1}">No</td>
                     <td>
                         <select id="liverpool-${i + 1}" onchange="updatePoints()">
@@ -134,4 +157,3 @@
     </table>
 </body>
 </html>
-
