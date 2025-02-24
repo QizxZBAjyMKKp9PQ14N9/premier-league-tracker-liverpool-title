@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premier League Title Race Tracker</title>
+    <script>
+        function updatePoints() {
+            let liverpoolPoints = 64;
+            let arsenalPoints = 53;
+            
+            for (let i = 1; i <= 11; i++) {
+                let liverpoolResult = document.getElementById(`liverpool-${i}`).value;
+                let arsenalResult = document.getElementById(`arsenal-${i}`).value;
+                
+                if (liverpoolResult === "Win") liverpoolPoints += 3;
+                else if (liverpoolResult === "Draw") liverpoolPoints += 1;
+                
+                if (arsenalResult === "Win") arsenalPoints += 3;
+                else if (arsenalResult === "Draw") arsenalPoints += 1;
+                
+                document.getElementById(`liverpool-points-${i}`).innerText = liverpoolPoints;
+                document.getElementById(`arsenal-points-${i}`).innerText = arsenalPoints;
+                document.getElementById(`points-gap-${i}`).innerText = liverpoolPoints - arsenalPoints;
+                document.getElementById(`remaining-points-${i}`).innerText = (11 - i) * 3 + arsenalPoints;
+                document.getElementById(`title-won-${i}`).innerText = (liverpoolPoints > (11 - i) * 3 + arsenalPoints) ? "YES" : "No";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Premier League Title Race Tracker</h2>
+    <table border="1">
+        <tr>
+            <th>Matchday</th>
+            <th>Liverpool Opponent</th>
+            <th>Arsenal Opponent</th>
+            <th>Liverpool Points</th>
+            <th>Arsenal Points</th>
+            <th>Points Gap</th>
+            <th>Remaining Possible Points</th>
+            <th>Title Won?</th>
+            <th>Liverpool Result</th>
+            <th>Arsenal Result</th>
+        </tr>
+        
+        <script>
+            const matches = [
+                ["Newcastle United", "Nottingham Forest"],
+                ["Southampton FC", "Manchester United"],
+                ["Aston Villa", "Chelsea FC"],
+                ["Everton FC", "Fulham FC"],
+                ["Fulham FC", "Everton FC"],
+                ["Leicester City", "Brentford FC"],
+                ["Tottenham Hotspur", "Brighton"],
+                ["Chelsea FC", "Wolves"],
+                ["Arsenal FC", "Newcastle United"],
+                ["Brighton & Hove Albion", "Southampton FC"],
+                ["Crystal Palace", "Wolves"]
+            ];
+            
+            for (let i = 0; i < matches.length; i++) {
+                document.write(`<tr>
+                    <td>${i + 1}</td>
+                    <td>${matches[i][0]}</td>
+                    <td>${matches[i][1]}</td>
+                    <td id="liverpool-points-${i + 1}">64</td>
+                    <td id="arsenal-points-${i + 1}">53</td>
+                    <td id="points-gap-${i + 1}">11</td>
+                    <td id="remaining-points-${i + 1}">${(11 - i) * 3 + 53}</td>
+                    <td id="title-won-${i + 1}">No</td>
+                    <td>
+                        <select id="liverpool-${i + 1}" onchange="updatePoints()">
+                            <option value="">Select</option>
+                            <option value="Win">Win</option>
+                            <option value="Draw">Draw</option>
+                            <option value="Loss">Loss</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="arsenal-${i + 1}" onchange="updatePoints()">
+                            <option value="">Select</option>
+                            <option value="Win">Win</option>
+                            <option value="Draw">Draw</option>
+                            <option value="Loss">Loss</option>
+                        </select>
+                    </td>
+                </tr>`);
+            }
+        </script>
+    </table>
+</body>
+</html>
+
