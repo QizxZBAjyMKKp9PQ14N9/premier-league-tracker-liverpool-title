@@ -4,6 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premier League Title Race Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        select {
+            padding: 5px;
+        }
+    </style>
     <script>
         function updatePoints() {
             let liverpoolPoints = 64;
@@ -30,7 +58,7 @@
 </head>
 <body>
     <h2>Premier League Title Race Tracker</h2>
-    <table border="1">
+    <table>
         <tr>
             <th>Matchday</th>
             <th>Liverpool Opponent</th>
